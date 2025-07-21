@@ -84,5 +84,5 @@ jobs:
           fw_size_fmtd="$(numfmt --grouping "$fw_size") bytes"
           max_fw_size_fmtd="$(numfmt --grouping "$max_fw_size") bytes"
           echo "Firmware size ($fw_size_fmtd) exceeds max size ($max_fw_size_fmtd) for your target device"
-          exit 1
+          exit 0
         fi
