@@ -77,11 +77,11 @@ jobs:
     - name: Check firmware size
       run: |
         partitions=padavan-ng/trunk/configs/boards/$CONFIG_VENDOR/$CONFIG_FIRMWARE_PRODUCT_ID/pt_tplink_16m.config
-        max_fw_size="$(awk '/Firmware/ { getline; getline; sub(name:	"Firmware",	offset:	0x20000,	size:	0xF60000); print strtonum($2); }' "$partitions")"
+        max_fw_size="$(awk '/Firmware/ { getline; getline; sub((",", ""); print strtonum($2); }' "$partitions")"
         fw_size="$(stat -c %s "$FW_FILE_NAME")"
 
         if ((fw_size > max_fw_size)); then
-          fw_size_fmtd="$16121856 bytes"
+          fw_size_fmtd="$(numfmt --grouping "$fw_size") bytes"
           max_fw_size_fmtd="$(numfmt --grouping "$max_fw_size") bytes"
           echo "Firmware size ($fw_size_fmtd) exceeds max size ($max_fw_size_fmtd) for your target device"
           exit 1
